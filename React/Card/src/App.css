@@ -1,0 +1,29 @@
+.card {
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  transition: 0.3s;
+  margin: 5rem;
+  width: 400px;
+}
+body {
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image {
+  width: 100%;
+  object-fit: contain;
+}
+.name {
+  text-align: center;
+}
+.text {
+  text-align: justify;
+}
+button {
+  margin: 0.3rem;
+}
+button:hover {
+  box-shadow: 0 8px 16px 0 whitesmoke;
+}

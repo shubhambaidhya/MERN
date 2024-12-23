@@ -4,7 +4,7 @@ import React from 'react';
 const BuyerList = () => {
   return (
     <Box>
-      <Typography color="primary">He is a Buyer</Typography>
+      <Typography color="primary">Buyer</Typography>
     </Box>
   );
 };

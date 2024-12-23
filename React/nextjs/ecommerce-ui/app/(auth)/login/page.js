@@ -36,7 +36,7 @@ const Login = () => {
             localStorage.setItem('userRole', response?.data?.userDetails?.role);
             router.push('/');
           } catch (error) {
-            console.log('error aayo');
+            console.log('error occured');
           }
         }}
       >

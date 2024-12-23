@@ -25,16 +25,16 @@ const Home = () => {
           username: "",
           password: "*********",
         }}
-        // validationSchema={Yup.object({
-        //   username: Yup.string()
-        //     .required("Name is required")
-        //     .trim()
-        //     .max(55, "Name must be max 55 characters"),
-        //   password: Yup.string()
-        //     .required("Password is required")
-        //     .min(6, "Password must be at least 6 characters long")
-        //     .max(20, "Password must be at most 20 characters long"),
-        // })}
+        validationSchema={Yup.object({
+          username: Yup.string()
+            .required("Name is required")
+            .trim()
+            .max(55, "Name must be max 55 characters"),
+          password: Yup.string()
+            .required("Password is required")
+            .min(6, "Password must be at least 6 characters long")
+            .max(20, "Password must be at most 20 characters long"),
+        })}
         onSubmit={(values) => {
           console.log(values);
         }}

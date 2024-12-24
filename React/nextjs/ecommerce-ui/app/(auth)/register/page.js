@@ -16,15 +16,31 @@ const Register = () => {
     <Box>
       <Formik
         initialValues={{
+          email: '',
+          password: '',
           firstName: '',
           lastName: '',
-          age: '',
-          address: '',
-          contact: '',
+          gender: '',
+          role: '',
         }}
         validationSchema={registerUserValidationSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values) => {
+          try {
+            const response = await axios({
+              method: 'POST',
+              url: 'http://localhost:8080/user/register',
+              data: values,
+            });
+            localStorage.setItem('token', response?.data?.accessToken);
+            localStorage.setItem(
+              'firstName',
+              response?.data?.userDetails?.firstName
+            );
+            localStorage.setItem('userRole', response?.data?.userDetails?.role);
+            router.push('/');
+          } catch (error) {
+            console.log('error');
+          }
         }}
       >
         {(formik) => {
@@ -52,6 +68,24 @@ const Register = () => {
               >
                 Register
               </Typography>
+              <FormControl fullWidth>
+                <TextField label="Email" {...formik.getFieldProps('email')} />
+                {formik.touched.email && formik.errors.email ? (
+                  <FormHelperText error>{formik.errors.email}</FormHelperText>
+                ) : null}
+              </FormControl>
+
+              <FormControl fullWidth>
+                <TextField
+                  label="Password"
+                  {...formik.getFieldProps('password')}
+                />
+                {formik.touched.password && formik.errors.password ? (
+                  <FormHelperText error>
+                    {formik.errors.password}
+                  </FormHelperText>
+                ) : null}
+              </FormControl>
               <div>
                 <FormControl>
                   <TextField
@@ -79,35 +113,17 @@ const Register = () => {
               </div>
 
               <FormControl>
-                <TextField
-                  label="Age"
-                  type="number"
-                  {...formik.getFieldProps('age')}
-                />
-                {formik.touched.age && formik.errors.age ? (
-                  <FormHelperText error>{formik.errors.age}</FormHelperText>
+                <TextField label="Gender" {...formik.getFieldProps('gender')} />
+                {formik.touched.gender && formik.errors.gender ? (
+                  <FormHelperText error>{formik.errors.gender}</FormHelperText>
                 ) : null}
               </FormControl>
               <FormControl>
-                <TextField
-                  label="Address"
-                  type="number"
-                  {...formik.getFieldProps('address')}
-                />
-                {formik.touched.address && formik.errors.address ? (
-                  <FormHelperText error>{formik.errors.address}</FormHelperText>
+                <TextField label="Role" {...formik.getFieldProps('role')} />
+                {formik.touched.role && formik.errors.role ? (
+                  <FormHelperText error>{formik.errors.role}</FormHelperText>
                 ) : null}
               </FormControl>
-              <FormControl>
-                <TextField
-                  label="Contact"
-                  {...formik.getFieldProps('contact')}
-                />
-                {formik.touched.contact && formik.errors.contact ? (
-                  <FormHelperText error>{formik.errors.contact}</FormHelperText>
-                ) : null}
-              </FormControl>
-
               <Button type="submit" variant="contained" color="success">
                 Submit
               </Button>

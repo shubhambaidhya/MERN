@@ -1,5 +1,5 @@
 'use client';
-import registerUserValidationSchema from '@/validation-schema/register.user.validation.schema';
+import { registerUserValidationSchema } from '@/validation-schema/register.user.validation.schema.js';
 import {
   Box,
   Button,
@@ -7,11 +7,30 @@ import {
   FormHelperText,
   Typography,
   TextField,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
 import { Formik } from 'formik';
 import React from 'react';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Link from 'next/link';
 
 const Register = () => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleMouseUpPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <Box>
       <Formik
@@ -68,49 +87,62 @@ const Register = () => {
               >
                 Register
               </Typography>
-              <FormControl fullWidth>
+              <FormControl>
+                <TextField
+                  label="FirstName"
+                  {...formik.getFieldProps('firstName')}
+                />
+                {formik.touched.firstName && formik.errors.firstName ? (
+                  <FormHelperText error>
+                    {formik.errors.firstName}
+                  </FormHelperText>
+                ) : null}
+              </FormControl>
+              <FormControl>
+                <TextField
+                  label="LastName"
+                  {...formik.getFieldProps('lastName')}
+                />
+                {formik.touched.lastName && formik.errors.lastName ? (
+                  <FormHelperText error>
+                    {formik.errors.lastName}
+                  </FormHelperText>
+                ) : null}
+              </FormControl>
+
+              <FormControl>
                 <TextField label="Email" {...formik.getFieldProps('email')} />
                 {formik.touched.email && formik.errors.email ? (
                   <FormHelperText error>{formik.errors.email}</FormHelperText>
                 ) : null}
               </FormControl>
-
-              <FormControl fullWidth>
-                <TextField
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? 'text' : 'password'}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label={
+                          showPassword
+                            ? 'hide the password'
+                            : 'display the password'
+                        }
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        onMouseUp={handleMouseUpPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                   label="Password"
-                  {...formik.getFieldProps('password')}
                 />
-                {formik.touched.password && formik.errors.password ? (
-                  <FormHelperText error>
-                    {formik.errors.password}
-                  </FormHelperText>
-                ) : null}
               </FormControl>
-              <div>
-                <FormControl>
-                  <TextField
-                    label="FirstName"
-                    {...formik.getFieldProps('firstName')}
-                    style={{ paddingRight: '1rem' }}
-                  />
-                  {formik.touched.firstName && formik.errors.firstName ? (
-                    <FormHelperText error>
-                      {formik.errors.firstName}
-                    </FormHelperText>
-                  ) : null}
-                </FormControl>
-                <FormControl>
-                  <TextField
-                    label="LastName"
-                    {...formik.getFieldProps('lastName')}
-                  />
-                  {formik.touched.lastName && formik.errors.lastName ? (
-                    <FormHelperText error>
-                      {formik.errors.lastName}
-                    </FormHelperText>
-                  ) : null}
-                </FormControl>
-              </div>
 
               <FormControl>
                 <TextField label="Gender" {...formik.getFieldProps('gender')} />
@@ -124,9 +156,22 @@ const Register = () => {
                   <FormHelperText error>{formik.errors.role}</FormHelperText>
                 ) : null}
               </FormControl>
-              <Button type="submit" variant="contained" color="success">
-                Submit
-              </Button>
+              <Box className="flex flex-col justify-center items-center w-full gap-1">
+                <Button
+                  fullWidth
+                  type="submit"
+                  variant="contained"
+                  color="success"
+                >
+                  SignIn
+                </Button>
+                <Link
+                  href="/login"
+                  className="text-color to-blue-800 underline"
+                >
+                  Already Registered? Login
+                </Link>
+              </Box>
             </form>
           );
         }}

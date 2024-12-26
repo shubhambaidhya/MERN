@@ -1,7 +1,7 @@
 'use client';
-import { Button, Typography } from '@mui/material';
+import { Alert, Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
+import Snackbar from '@mui/material/Snackbar';
 const Counter = () => {
   const [count, setCount] = useState(100);
   const [wishUser, setWishUser] = useState(false);
@@ -10,8 +10,25 @@ const Counter = () => {
       setWishUser(true);
     }
   }, [count]);
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
   return (
     <div>
+      <Snackbar open={wishUser} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          Merry Christmas
+        </Alert>
+      </Snackbar>
       <Typography variant="h3">{count}</Typography>
       <Button
         variant="contained"
@@ -22,7 +39,7 @@ const Counter = () => {
       >
         add
       </Button>
-      {wishUser && <p className="text-5xl">Merry Christmas</p>}
+      {/* {wishUser && <p className="text-5xl">Merry Christmas</p>} */}
     </div>
   );
 };

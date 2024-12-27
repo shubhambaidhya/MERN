@@ -11,6 +11,7 @@ import {
 import { Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import Link from 'next/link';
 const Login = () => {
   const router = useRouter();
   return (
@@ -75,7 +76,7 @@ const Login = () => {
                   </FormHelperText>
                 ) : null}
               </FormControl>
-              <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+              <div className="flex flex-col justify-center items-center w-full">
                 <Button
                   fullWidth
                   type="submit"
@@ -84,18 +85,13 @@ const Login = () => {
                 >
                   Login
                 </Button>
-                <Button
-                  fullWidth
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    router.push('/register');
-                  }}
+                <Link
+                  className="text-md underline text-blue-600 mt-2"
+                  href="/register"
                 >
-                  Signup
-                </Button>
-              </Box>
+                  Register Here!!
+                </Link>
+              </div>
             </form>
           );
         }}

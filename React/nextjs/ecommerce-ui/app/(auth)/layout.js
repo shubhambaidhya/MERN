@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Auth",
-  description: "Auth",
+  title: 'Auth',
+  description: 'Auth',
 };
 
 const AuthLayout = ({ children }) => {

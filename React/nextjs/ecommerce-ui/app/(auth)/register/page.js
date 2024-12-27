@@ -69,12 +69,31 @@ const Register = () => {
       }}
       validationSchema={registerUserValidationSchema}
       onSubmit={(values) => {
-        console.log(values);
+        async (values) => {
+          try {
+            const response = await axios({
+              method: 'POST',
+              url: 'http://localhost:8080/user/register',
+              data: values,
+            });
+            localStorage.setItem('token', response?.data?.accessToken);
+            localStorage.setItem(
+              'firstName',
+              response?.data?.userDetails?.firstName
+            );
+            localStorage.setItem('userRole', response?.data?.userDetails?.role);
+            router.push('/');
+          } catch (error) {
+            console.log('error occured');
+          }
+        };
       }}
     >
       {(formik) => (
         <form onSubmit={formik.handleSubmit} className="auth-form gap-4">
-          <Typography variant="h3">Register</Typography>
+          <Typography variant="h3" fontFamily="times new roman">
+            Register
+          </Typography>
           <FormControl fullWidth>
             <TextField
               label="First Name"

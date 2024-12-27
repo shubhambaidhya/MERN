@@ -19,3 +19,9 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+@layer utilities {
+  .auth-form {
+    @apply flex flex-col justify-between items-center w-[400px] shadow-2xl
+    shadow-slate-500 px-8 py-4 min-h-[400px] rounded-md;
+  }
+}

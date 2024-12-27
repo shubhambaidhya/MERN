@@ -15,7 +15,7 @@ const Counter = () => {
       return;
     }
 
-    setOpen(false);
+    setWishUser(false);
   };
   return (
     <div>

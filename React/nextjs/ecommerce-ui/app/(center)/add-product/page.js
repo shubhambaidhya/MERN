@@ -1,5 +1,6 @@
 'use client';
 import { productCategories } from '@/constants/categories';
+import $axios from '@/lib/axios/axios.instance';
 import { addProductValidationSchema } from '@/validation-schema/add.product.validation.schema';
 import {
   Button,
@@ -13,10 +14,22 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { Formik } from 'formik';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const AddProduct = () => {
+  const router = useRouter();
+  const { isPending, error, mutate } = useMutation({
+    mutationKey: ['add-product'],
+    mutationFn: async (values) => {
+      return await $axios.post('/product/add', values);
+    },
+    onSuccess: () => {
+      router.push('/login');
+    },
+  });
   return (
     <Formik
       initialValues={{
@@ -30,7 +43,7 @@ const AddProduct = () => {
       }}
       validationSchema={addProductValidationSchema}
       onSubmit={(values) => {
-        console.log(values);
+        mutate(values);
       }}
     >
       {(formik) => (
@@ -119,6 +132,7 @@ const AddProduct = () => {
               type="submit"
               variant="contained"
               color="secondary"
+              disabled={isPending}
             >
               Submit
             </Button>

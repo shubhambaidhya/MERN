@@ -17,17 +17,25 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { Formik } from 'formik';
 import { useRouter } from 'next/navigation';
-import React from 'react';
 
+import React from 'react';
 const AddProduct = () => {
   const router = useRouter();
-  const { isPending, error, mutate } = useMutation({
+
+  const { isPending, error, data, mutate } = useMutation({
     mutationKey: ['add-product'],
     mutationFn: async (values) => {
-      return await $axios.post('/product/add', values);
+      return await $axios.post('/product/add', values, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+        },
+      });
     },
-    onSuccess: () => {
-      router.push('/login');
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onError: (error) => {
+      console.log(error);
     },
   });
   return (
@@ -44,6 +52,7 @@ const AddProduct = () => {
       validationSchema={addProductValidationSchema}
       onSubmit={(values) => {
         mutate(values);
+        router.push('/');
       }}
     >
       {(formik) => (

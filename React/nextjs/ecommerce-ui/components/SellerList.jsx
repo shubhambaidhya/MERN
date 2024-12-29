@@ -1,11 +1,17 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
+import ProductCard from './ProductCard';
 
 const SellerList = () => {
   return (
-    <Box>
-      <Typography color="secondary">Seller</Typography>
-    </Box>
+    <div className="flex flex-row flex-wrap gap-8">
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+    </div>
   );
 };
 

@@ -24,4 +24,7 @@ body {
     @apply flex flex-col justify-between items-center w-[400px] shadow-2xl
     shadow-slate-500 px-8 py-4 rounded-md;
   }
+  .card-center {
+    @apply flex flex-row flex-wrap gap-8 justify-center items-center my-8;
+  }
 }

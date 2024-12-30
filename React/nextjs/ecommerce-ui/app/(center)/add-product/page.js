@@ -32,7 +32,7 @@ const AddProduct = () => {
       });
     },
     onSuccess: (res) => {
-      console.log(res);
+      router.push('/');
     },
     onError: (error) => {
       console.log(error);

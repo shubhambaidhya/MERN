@@ -5,7 +5,7 @@ import React from 'react';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
-const ProductCard = () => {
+const ProductCard = (props) => {
   return (
     <Box
       sx={{
@@ -16,7 +16,7 @@ const ProductCard = () => {
       }}
     >
       <Image
-        src="/book-composition-with-open-book_23-2147690555.avif"
+        src={'/book-composition-with-open-book_23-2147690555.avif'}
         height={400}
         width={400}
         alt="Book image"
@@ -36,12 +36,7 @@ const ProductCard = () => {
         </Stack>
 
         <Typography sx={{ textAlign: 'justify' }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, culpa
-          sapiente. Quia, alias rerum itaque temporibus eum corrupti tempore
-          corporis aut hic cum assumenda officia exercitationem deserunt modi.
-          Numquam dicta sed quod ut veniam, voluptatum magnam in tempore,
-          laudantium ea facere voluptate pariatur quos voluptatibus! Quia iste
-          vitae quos praesentium! ...
+          {props.description}
         </Typography>
         <Stack direction="row" justifyContent="space-between">
           <Button

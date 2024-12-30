@@ -30,9 +30,9 @@ const ProductCard = (props) => {
         }}
       >
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h5">Book</Typography>
-          <Chip label="Sajha" color="success" variant="outlined" />
-          <Typography variant="h5">$400</Typography>
+          <Typography variant="h5">{props.name}</Typography>
+          <Chip label={props.brand} color="success" variant="outlined" />
+          <Typography variant="h5">{props.price}</Typography>
         </Stack>
 
         <Typography sx={{ textAlign: 'justify' }}>

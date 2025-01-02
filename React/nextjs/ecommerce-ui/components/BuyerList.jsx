@@ -3,7 +3,7 @@
 import $axios from '@/lib/axios/axios.instance';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import Loader from './Loader';
+
 import { CircularProgress, Pagination } from '@mui/material';
 import ProductCard from './ProductCard';
 

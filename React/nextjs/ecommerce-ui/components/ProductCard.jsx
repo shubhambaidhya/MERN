@@ -15,12 +15,20 @@ const ProductCard = (props) => {
           ' rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
       }}
     >
-      <Image
-        src={'/book-composition-with-open-book_23-2147690555.avif'}
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReqXUWHhvgS_uCZR1vCu0jYrGiSS_5OahAeA&s"
+        alt=""
+        height={400}
+        width={400}
+      />
+      {/* <Image
+        src={
+          props.image || '/book-composition-with-open-book_23-2147690555.avif'
+        }
         height={400}
         width={400}
         alt="Book image"
-      />
+      /> */}
       <Box
         sx={{
           padding: '1rem',

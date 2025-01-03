@@ -4,6 +4,7 @@ import { CircularProgress, Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import ProductCard from './ProductCard';
 import { useEffect, useState } from 'react';
+import { isSeller } from '@/utils/check.role';
 
 const SellerList = () => {
   const [role, setRole] = useState('');
@@ -20,9 +21,8 @@ const SellerList = () => {
         // searchText: '',
       });
     },
-    enabled: role === 'seller',
+    enabled: isSeller(),
   });
-  console.log(data);
 
   const productList = data?.data?.productList || [];
 

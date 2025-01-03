@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 
 import { CircularProgress, Pagination } from '@mui/material';
 import ProductCard from './ProductCard';
+import { isBuyer } from '@/utils/check.role';
 
 const BuyerList = () => {
   const [page, setPage] = useState(1);
@@ -21,6 +22,7 @@ const BuyerList = () => {
     onError: (error) => {
       console.log(error);
     },
+    enabled: isBuyer(),
   });
 
   const productList = data?.data?.productList || [];

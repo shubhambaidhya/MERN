@@ -6,7 +6,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { useMutation } from '@tanstack/react-query';
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { CircularProgress } from '@mui/material';
 import $axios from '@/lib/axios/axios.instance';
 
@@ -22,14 +26,14 @@ const DeleteProductDialogue = (props) => {
   };
 
   // Delete Product API
-
+  const queryClient = useQueryClient();
   const { isPending, mutate } = useMutation({
     mutationKey: ['delete-product'],
     mutationFn: async () => {
       return await $axios.delete(`/product/delete/${props.productId}`);
     },
     onSuccess: () => {
-      console.log('Deleted...');
+      queryClient.refetchQueries('seller-product-list');
     },
     onError: (error) => {
       console.log(error);

@@ -55,7 +55,7 @@ const Login = () => {
                   fontFamily: 'times new roman',
                 }}
               >
-                Sign in
+                Login
               </Typography>
 
               <FormControl fullWidth>

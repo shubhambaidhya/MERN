@@ -6,8 +6,11 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useMutation } from '@tanstack/react-query';
 import $axios from '@/lib/axios/axios.instance';
 import DeleteProductDialogue from './DeleteProductDialogue';
+import { isSeller } from '@/utils/check.role';
+import { useRouter } from 'next/navigation';
 
 const ProductCard = (props) => {
+  const router = useRouter();
   const productId = props._id;
   return (
     <Box
@@ -50,12 +53,15 @@ const ProductCard = (props) => {
           {props.description}
         </Typography>
         <Stack direction="row" justifyContent="space-between">
-          <DeleteProductDialogue productId={productId} />
+          {isSeller() && <DeleteProductDialogue productId={productId} />}
 
           <Button
             color="success"
             variant="contained"
             startIcon={<VisibilityOutlinedIcon />}
+            onClick={() => {
+              router.push(`/product/details/${productId}`);
+            }}
           >
             View More
           </Button>

@@ -1,18 +1,14 @@
-import * as React from 'react';
+import $axios from '@/lib/axios/axios.instance';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { CircularProgress } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
-import { CircularProgress } from '@mui/material';
-import $axios from '@/lib/axios/axios.instance';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import * as React from 'react';
 
 const DeleteProductDialogue = (props) => {
   const [open, setOpen] = React.useState(false);

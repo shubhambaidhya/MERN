@@ -66,7 +66,6 @@ const Register = () => {
         validationSchema={registerUserValidationSchema}
         onSubmit={(values) => {
           mutate(values);
-          
         }}
       >
         {(formik) => (

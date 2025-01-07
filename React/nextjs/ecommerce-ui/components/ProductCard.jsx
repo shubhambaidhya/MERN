@@ -1,13 +1,10 @@
 'use client';
+import { isSeller } from '@/utils/check.role';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { useMutation } from '@tanstack/react-query';
-import $axios from '@/lib/axios/axios.instance';
-import DeleteProductDialogue from './DeleteProductDialogue';
-import { isSeller } from '@/utils/check.role';
 import { useRouter } from 'next/navigation';
+import DeleteProductDialogue from './DeleteProductDialogue';
 
 const ProductCard = (props) => {
   const router = useRouter();

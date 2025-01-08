@@ -1,8 +1,10 @@
 'use client';
 import { productCategories } from '@/constants/categories';
 import $axios from '@/lib/axios/axios.instance';
+import { addProductValidationSchema } from '@/validation-schema/add.product.validation.schema';
 import {
   Button,
+  Checkbox,
   CircularProgress,
   FormControl,
   FormControlLabel,
@@ -50,14 +52,15 @@ const EditProductPage = () => {
   });
   return (
     <Formik
+      enableReinitialize
       initialValues={{
-        name: productDetail.name,
-        brand: productDetail.brand,
-        price: productDetail.price,
-        quantity: productDetail.quantity,
-        category: productDetail.category,
-        freeShipping: productDetail.freeShipping,
-        description: productDetail.description,
+        name: productDetail?.name || '',
+        brand: productDetail?.brand || '',
+        price: productDetail?.price || '',
+        quantity: productDetail?.quantity || '',
+        category: productDetail?.category || '',
+        freeShipping: productDetail?.freeShipping || false,
+        description: productDetail?.description || '',
       }}
       validationSchema={addProductValidationSchema}
       onSubmit={(values) => {
@@ -150,7 +153,7 @@ const EditProductPage = () => {
               type="submit"
               variant="contained"
               color="secondary"
-              disabled={isLoading}
+              disabled={isPending}
             >
               Submit
             </Button>

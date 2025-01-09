@@ -42,9 +42,10 @@ const ProductCard = (props) => {
           {props.description}
         </Typography>
         <Stack direction="row" justifyContent="space-between">
-          {isSeller() && <DeleteProductDialogue productId={productId} />}
+          {/* {isSeller() && <DeleteProductDialogue productId={productId} />} */}
 
           <Button
+            fullWidth
             color="success"
             variant="contained"
             startIcon={<VisibilityOutlinedIcon />}

@@ -18,9 +18,11 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Formik } from 'formik';
 import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const EditProductPage = () => {
+  const router = useRouter();
   const params = useParams();
   const productId = params?.id;
   const { data, isPending } = useQuery({
@@ -29,27 +31,25 @@ const EditProductPage = () => {
       return await $axios.get(`/product/detail/${productId}`);
     },
   });
-  const productDetail = data?.data?.productDetail;
-  console.log(productDetail);
-  if (isPending) {
-    <CircularProgress />;
-  }
-  const { mutate } = useMutation({
-    mutationKey: ['add-product'],
+  // get product details
+  const { isPending: editPending, mutate } = useMutation({
+    mutationKey: ['edit-product'],
     mutationFn: async (values) => {
-      return await $axios.post('/product/add', values, {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem('token')}`,
-        },
-      });
+      return await $axios.put(`/product/edit/${productId}`, values);
     },
-    onSuccess: (res) => {
+    onSuccess: () => {
       router.push('/');
     },
     onError: (error) => {
       console.log(error);
     },
   });
+  const productDetail = data?.data?.productDetail;
+  console.log(productDetail);
+  if (isPending) {
+    <CircularProgress />;
+  }
+
   return (
     <Formik
       enableReinitialize
@@ -141,7 +141,12 @@ const EditProductPage = () => {
           </FormControl>
           <FormControl fullWidth>
             <FormControlLabel
-              control={<Checkbox {...formik.getFieldProps('freeShipping')} />}
+              control={
+                <Checkbox
+                  checked={formik?.values?.freeShipping}
+                  {...formik.getFieldProps('freeShipping')}
+                />
+              }
               label="FreeShipping"
               labelPlacement="start"
             />
@@ -154,6 +159,9 @@ const EditProductPage = () => {
               variant="contained"
               color="secondary"
               disabled={isPending}
+              onClick={() => {
+                router.push('/');
+              }}
             >
               Submit
             </Button>

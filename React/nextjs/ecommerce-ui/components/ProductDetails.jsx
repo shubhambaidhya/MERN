@@ -16,15 +16,21 @@ import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import DeleteProductDialogue from './DeleteProductDialogue';
 import { useRouter } from 'next/navigation';
 
 const ProductDetails = () => {
   const router = useRouter();
   const params = useParams();
-
   const [count, setCount] = React.useState(1);
+  const [isMounted, setIsMounted] = useState(true);
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsMounted(true);
+    }
+  }, []);
 
   const increaseCount = () => {
     setCount(count + 1);
@@ -46,7 +52,7 @@ const ProductDetails = () => {
 
   const productDetail = data?.data?.productDetail;
 
-  if (isPending) {
+  if (isPending || !isMounted) {
     return <CircularProgress />;
   }
   return (

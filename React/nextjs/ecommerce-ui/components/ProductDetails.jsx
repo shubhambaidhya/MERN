@@ -33,7 +33,9 @@ const ProductDetails = () => {
   }, []);
 
   const increaseCount = () => {
-    setCount(count + 1);
+    if (count < availableProductQuantity) {
+      setCount(count + 1);
+    }
   };
 
   const decreaseCount = () => {
@@ -51,6 +53,8 @@ const ProductDetails = () => {
   });
 
   const productDetail = data?.data?.productDetail;
+  const availableProductQuantity = productDetail?.quantity;
+  const isCountEqualToProductQuantity = count === availableProductQuantity;
 
   if (isPending || !isMounted) {
     return <CircularProgress />;
@@ -123,7 +127,12 @@ const ProductDetails = () => {
               spacing={4}
               className="mt-6"
             >
-              <IconButton color="success" size="large" onClick={increaseCount}>
+              <IconButton
+                color="success"
+                size="large"
+                onClick={increaseCount}
+                disabled={isCountEqualToProductQuantity}
+              >
                 <AddIcon />
               </IconButton>
               <Typography
@@ -146,6 +155,9 @@ const ProductDetails = () => {
               variant="contained"
               color="success"
               className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg mt-4"
+              onClick={() => {
+                router.push(`/cart`);
+              }}
             >
               Add to Cart
             </Button>

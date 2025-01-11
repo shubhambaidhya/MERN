@@ -10,7 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import * as React from 'react';
 
-const DeleteProductDialogue = (props) => {
+const  DeleteProductDialogue = (props) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

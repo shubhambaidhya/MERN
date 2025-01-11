@@ -1,5 +1,4 @@
 'use client';
-
 import $axios from '@/lib/axios/axios.instance';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';

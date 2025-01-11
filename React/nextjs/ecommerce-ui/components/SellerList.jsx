@@ -18,7 +18,6 @@ const SellerList = () => {
       return await $axios.post('/product/seller/list', {
         page: page,
         limit: 2,
-        // searchText: '',
       });
     },
     enabled: isSeller(),

@@ -34,7 +34,14 @@ router.post(
     return res.status(201).send({ message: 'Product is added successfully.' });
   }
 );
+//* list all products
+router.get('/list', isUser, async (req, res) => {
+  //find all products
+  const products = await Product.find();
 
+  //send response
+  return res.status(200).send({ message: 'success', productList: products });
+});
 // * delete product
 router.delete(
   '/product/delete/:id',

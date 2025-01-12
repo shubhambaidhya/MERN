@@ -74,6 +74,15 @@ router.delete('/cart/flush', isBuyer, async (req, res) => {
   return res.status(200).send({ message: 'Cart is cleared successfully.' });
 });
 
+//* list all products in a cart
+router.get('/cart/list', isBuyer, async (req, res) => {
+  //find all products
+  const cart = await Cart.find();
+
+  //send response
+  return res.status(200).send({ message: 'success', cartList: cart });
+});
+
 // * remove single item from cart
 //  id => cartId
 router.delete(

@@ -19,6 +19,7 @@ import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 import DeleteProductDialogue from './DeleteProductDialogue';
 import { useRouter } from 'next/navigation';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const ProductDetails = () => {
   const router = useRouter();
@@ -169,16 +170,29 @@ const ProductDetails = () => {
               </IconButton>
             </Stack>
             {/* Add to Cart Button */}
-            <Button
-              variant="contained"
-              color="success"
-              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg mt-4"
-              onClick={() => {
-                mutate();
-              }}
-            >
-              Add to Cart
-            </Button>
+            <div className="flex gap-8">
+              <Button
+                variant="contained"
+                color="success"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg mt-4"
+                endIcon={<AddShoppingCartIcon />}
+                onClick={() => {
+                  mutate();
+                }}
+              >
+                Add to Cart
+              </Button>
+              <Button
+                variant="contained"
+                color="success"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg mt-4"
+                onClick={() => {
+                  router.push('/cart');
+                }}
+              >
+                Cart
+              </Button>
+            </div>
           </>
         )}
 

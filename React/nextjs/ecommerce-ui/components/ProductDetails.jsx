@@ -13,7 +13,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
@@ -44,6 +44,24 @@ const ProductDetails = () => {
     }
   };
 
+  // add product to card
+  const { isPending: addToCartPending, mutate } = useMutation({
+    mutationKey: ['add-item-to-cart'],
+    mutationFn: async () => {
+      return await $axios.post('/cart/add/item', {
+        productId: params.id,
+        orderedQuantity: count,
+      });
+    },
+    onSuccess: () => {
+      //open snackbar
+    },
+    onError: () => {
+      console.log('add to cart failed');
+      console.log(error);
+    },
+  });
+
   // hit get product detail api
   const { data, isPending } = useQuery({
     queryKey: ['get-product-details'],
@@ -56,7 +74,7 @@ const ProductDetails = () => {
   const availableProductQuantity = productDetail?.quantity;
   const isCountEqualToProductQuantity = count === availableProductQuantity;
 
-  if (isPending || !isMounted) {
+  if (isPending || !isMounted || addToCartPending) {
     return <CircularProgress />;
   }
   return (
@@ -156,7 +174,7 @@ const ProductDetails = () => {
               color="success"
               className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg mt-4"
               onClick={() => {
-                router.push(`/cart`);
+                mutate();
               }}
             >
               Add to Cart

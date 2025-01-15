@@ -6,6 +6,7 @@ import { addCartItemValidationSchema } from './cart.validation.js';
 import Product from '../product/product.model.js';
 import Cart from './cart.model.js';
 import validateMongoIdFromParams from '../middleware/validate.mongo.id.js';
+import { paginationDataValidationSchema } from './cart.validation.js';
 
 const router = express.Router();
 
@@ -39,6 +40,13 @@ router.post(
     // if not product, throw error
     if (!product) {
       return res.status(404).send({ message: 'Product does not exist.' });
+    }
+
+    const cart = await Cart.findOne({ productId, buyerId: req.loggedInUserId });
+    if (cart) {
+      return res
+        .status(409)
+        .send({ message: 'Item has already been added to the cart' });
     }
 
     // check if ordered quantity exceeds product quantity
@@ -75,13 +83,47 @@ router.delete('/cart/flush', isBuyer, async (req, res) => {
 });
 
 //* list all products in a cart
-router.get('/cart/list', isBuyer, async (req, res) => {
-  //find all products
-  const cart = await Cart.find();
+router.post(
+  '/cart/list',
+  isBuyer,
+  validateReqBody(paginationDataValidationSchema),
+  async (req, res) => {
+    const { page, limit } = req.body;
+    const skip = (page - 1) * limit;
 
-  //send response
-  return res.status(200).send({ message: 'success', cartList: cart });
-});
+    const data = await Cart.aggregate([
+      {
+        $match: {
+          buyerId: req.loggedInUserId,
+        },
+      },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'productId',
+          foreignField: '_id',
+          as: 'productData',
+        },
+      },
+      {
+        $project: {
+          productId: 1,
+          orderedQuantity: 1,
+          productDetails: {
+            name: { $first: '$productData.name' },
+            brand: { $first: '$productData.brand' },
+            category: { $first: '$productData.category' },
+            totalQuantity: { $first: '$productData.quantity' },
+            image: { $first: '$productData.freeShipping' },
+            price: { $first: '$productData.price' },
+          },
+        },
+      },
+    ]);
+    console.log({ data });
+    return res.status(200).send({ message: 'success', cartData: data });
+  }
+);
 
 // * remove single item from cart
 //  id => cartId

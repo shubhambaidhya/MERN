@@ -1,11 +1,9 @@
-'use client';
-
 import $axios from '@/lib/axios/axios.instance';
-import { CircularProgress } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 
-const cartPage = () => {
-  const { data, isPending } = useQuery({
+const useCartList = () => {
+  const { data, isPending, error, isError } = useQuery({
     queryKey: ['cart-list'],
     queryFn: async () => {
       return await $axios.post('/cart/list', {
@@ -15,11 +13,7 @@ const cartPage = () => {
     },
   });
 
-  if (isPending) {
-    return <CircularProgress />;
-  }
-
-  return <div>CartPage</div>;
+  return { res: data, isPending, error, isError };
 };
 
-export default cartPage;
+export default useCartList;

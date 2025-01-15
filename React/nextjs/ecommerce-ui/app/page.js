@@ -16,7 +16,7 @@ const Home = () => {
   const router = useRouter();
   return (
     <div>
-      <p className="text-5xl bold underline">Welcome {firstName}</p>
+      <p className="text-5xl bold ">Welcome {firstName}</p>
       <Button
         variant="contained"
         color="secondary"

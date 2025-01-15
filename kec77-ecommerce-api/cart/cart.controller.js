@@ -114,13 +114,14 @@ router.post(
             brand: { $first: '$productData.brand' },
             category: { $first: '$productData.category' },
             totalQuantity: { $first: '$productData.quantity' },
-            image: { $first: '$productData.freeShipping' },
+            image: { $first: '$productData.image' },
+            freeShipping: { $first: '$productData.freeShipping' },
             price: { $first: '$productData.price' },
           },
         },
       },
     ]);
-    console.log({ data });
+
     return res.status(200).send({ message: 'success', cartData: data });
   }
 );

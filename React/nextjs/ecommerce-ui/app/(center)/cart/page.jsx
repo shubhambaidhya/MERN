@@ -2,18 +2,33 @@
 import CartItemCard from '@/components/CardItemCard';
 import CartEmpty from '@/components/EmptyCart';
 import { getCartList } from '@/lib/routes/cart.routes';
-import { CircularProgress } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-
+import { isBuyer } from '@/utils/check.role';
+import { Button, CircularProgress } from '@mui/material';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useState } from 'react';
+import RemoveShoppingCartOutlinedIcon from '@mui/icons-material/RemoveShoppingCartOutlined';
+import $axios from '@/lib/axios/axios.instance';
 const CartPage = () => {
+  const [deleteSwitch, setDeleteSwitch] = useState(false);
   const { data, isPending } = useQuery({
-    queryKey: ['cart-list'],
+    queryKey: ['cart-list', deleteSwitch],
     queryFn: () => getCartList(),
+    enabled: isBuyer(),
   });
 
   const cartData = data?.data?.cartData;
-  if (isPending) {
+
+  // flush cart
+  const { isPending: flushCartPending, mutate } = useMutation({
+    mutationKey: ['flush-cart'],
+    mutationFn: async () => {
+      return await $axios.delete('/cart/flush');
+    },
+    onSuccess: () => {
+      setDeleteSwitch(!deleteSwitch);
+    },
+  });
+  if (isPending || flushCartPending) {
     return <CircularProgress />;
   }
 
@@ -21,11 +36,23 @@ const CartPage = () => {
     return <CartEmpty />;
   }
   return (
-    <div className=" flex justify-center items-center flex-wrap gap-4 mt-10">
-      {cartData.map((item) => {
-        return <CartItemCard key={item._id} {...item} />;
-      })}
-    </div>
+    <>
+      <Button
+        endIcon={<RemoveShoppingCartOutlinedIcon />}
+        variant="outlined"
+        color="error"
+        onClick={() => {
+          mutate();
+        }}
+      >
+        flush cart
+      </Button>
+      <div className=" flex  justify-center items-center flex-wrap gap-4 m-8 ">
+        {cartData.map((item) => {
+          return <CartItemCard key={item._id} {...item} />;
+        })}
+      </div>
+    </>
   );
 };
 

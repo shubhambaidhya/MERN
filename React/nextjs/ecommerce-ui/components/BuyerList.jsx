@@ -13,7 +13,7 @@ const BuyerList = () => {
     queryFn: async () => {
       return await $axios.post('/product/buyer/list', {
         page: page,
-        limit: 3,
+        limit: 6,
       });
     },
 

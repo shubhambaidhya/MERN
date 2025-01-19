@@ -71,7 +71,7 @@ const Header = (props) => {
     <Box sx={{ display: 'flex', mb: 10 }}>
       <CssBaseline />
       <AppBar component="nav">
-        <Toolbar className="bg-red-600 ">
+        <Toolbar className="bg-primary ">
           <IconButton
             color="inherit"
             aria-label="open drawer"
